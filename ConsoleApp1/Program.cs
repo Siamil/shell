@@ -10,28 +10,42 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            string command = "";
+            string path = @"C:\Users\";
             while (true)
             {
-                Console.WriteLine("Type command");
-                string command = Console.ReadLine();
-                Console.WriteLine("Type path");
-                string path = Console.ReadLine();
-                try
+
+                
+                    Console.WriteLine("Type command");
+                    string input = Console.ReadLine();
+                    var splitted = input.Split(' ');
+                if (splitted.Length == 1)
                 {
-                    if (command.Equals("dir")) Dir(path);
-                    if (command == "mkdir") Mkdir(path);
-                    if (command == "cd") cd(path);
-                    if (command == "rmdir") Rmdir(path);
+                    command = splitted[0];
                 }
-                catch(Exception e)
+                else if (splitted.Length == 2)
                 {
+                    command = splitted[0];
+                    path = splitted[1];
+                }
+                else Console.WriteLine("Wrong command");
+                    try { 
+                    if (command == "dir") Dir(path); 
+                    else if (command == "mkdir") Mkdir(path);
+                    else if (command == "cd") cd(path);
+                    else if (command == "rmdir") Rmdir(path);
+                    else Console.WriteLine("Wrong command");
+                }
+                catch (Exception e)
+                {
+
                     Console.WriteLine(e.Message);
                 }
 
-                
-                
-                
-            }
+
+
+        }  
+            
         }
         static void Dir(string path)
         {
