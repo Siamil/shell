@@ -12,15 +12,21 @@ namespace ConsoleApp1
         {
             while (true)
             {
+                Console.WriteLine("Type command");
                 string command = Console.ReadLine();
-                Console.WriteLine("Podaj sciezke");
+                Console.WriteLine("Type path");
                 string path = Console.ReadLine();
-                if (command.Equals("dir")) Dir(path);
-                if (command == "mkdir") Mkdir(path);
-                if (command == "cd") cd(path);
-                if (command == "rmdir") Rmdir(path);
-
-                Console.WriteLine("Gotowe");
+                try
+                {
+                    if (command.Equals("dir")) Dir(path);
+                    if (command == "mkdir") Mkdir(path);
+                    if (command == "cd") cd(path);
+                    if (command == "rmdir") Rmdir(path);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
 
                 
                 
