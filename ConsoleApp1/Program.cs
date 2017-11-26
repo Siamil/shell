@@ -10,15 +10,13 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string command = "";
-            string path = @"C:\Users\";
+            
             while (true)
             {
-
-                
-                    Console.WriteLine("Type command");
-                    string input = Console.ReadLine();
-                    var splitted = input.Split(' ');
+                string command = "";
+                string path = @"C:\Users\";
+                string input = Console.ReadLine();
+                var splitted = input.Split(' ');
                 if (splitted.Length == 1)
                 {
                     command = splitted[0];
@@ -29,22 +27,83 @@ namespace ConsoleApp1
                     path = splitted[1];
                 }
                 else Console.WriteLine("Wrong command");
-                    try { 
-                    if (command == "dir") Dir(path); 
-                    else if (command == "mkdir") Mkdir(path);
-                    else if (command == "cd") cd(path);
-                    else if (command == "rmdir") Rmdir(path);
-                    else Console.WriteLine("Wrong command");
-                }
-                catch (Exception e)
-                {
 
-                    Console.WriteLine(e.Message);
-                }
+                if (command == "dir")
+                    try
+                    {
+                        Dir(path);
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine("path: " + path + " not found");
+                    }
+                    catch (UnauthorizedAccessException e)
+                    {
+                        Console.WriteLine("You dont have the required permission. ");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine("Invalid path: " + path);
+                    }
+
+
+                else if (command == "mkdir")
+                    try
+                    {
+                        Mkdir(path);
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine("path: " + path + " not found");
+                    }
+                    catch (UnauthorizedAccessException e)
+                    {
+                        Console.WriteLine("You dont have the required permission. ");
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine("Invalid path: " + path);
+                    }
+            
+                    
+                else if (command == "cd")
+                    try
+                    {
+                        cd(path);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine("path: " + path + " is empty.");
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Console.WriteLine("Invalid drive is specified, or drive is unavailable ");
+                    }
+                    catch(System.IO.DirectoryNotFoundException)
+                    {
+                        Console.WriteLine("Path:" +path+" not found ");
+                    }
+                else if (command == "rmdir")
+                    try
+                    {
+                        Rmdir(path);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine("path: " + path + " is empty.");
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Console.WriteLine("Directory does not exist.");
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine("Target directory contains files.");
+                    }
 
 
 
-        }  
+            }  
             
         }
         static void Dir(string path)
